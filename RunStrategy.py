@@ -161,4 +161,5 @@ while True:
 
                             response = crypto.send_html(tg_token,tg_chat_id,sendMsgText) 
                         print(sendMsgText)   
+        print(f"{k} {symbol} signal:{signal} {datetime.now()}")
     k += 1     
