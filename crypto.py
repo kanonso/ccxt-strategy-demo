@@ -208,5 +208,4 @@ class orders_positions(object):
                     > noticeTime：<font color=\"comment\">{datetime.now()}</font>       
                     > loop count：<font color=\"comment\">{kwargs['k']}</font>                        
                     > ip：<font color=\"comment\">{self.local_ip}</font>                       
-            '''        
-        self.send_work_markdown() 
+            ''' 

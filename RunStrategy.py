@@ -43,6 +43,7 @@ for symbol in target_pool:
                 'minSz' : float(okx.market(symbol)['info']['minSz'])}
     contracts.update({symbol:contract})
 
+print(f"{k} finished initial loading {datetime.now}")
 while True:
     open_orders = okx.fetch_open_orders()
     positions = okx.fetch_positions()
@@ -159,4 +160,5 @@ while True:
 
                             response = crypto.send_html(tg_token,tg_chat_id,sendMsgText) 
                         print(sendMsgText)   
+        print(f"{k} {symbol} signal：{signal} {datetime.now()}")
     k += 1     
