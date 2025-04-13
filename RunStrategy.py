@@ -3,6 +3,16 @@ from datetime import datetime
 import time as tme
 import pandas as pd
 import ccxt,configparser
+
+############ strategy config ############   
+lvg,shot,haircut,cancel_time = 10, 5,0.01,5
+threshold = shot * 2
+target_pool = ['BTC-USDT-SWAP','DOGE-USDT-SWAP','ETH-USDT-SWAP',
+               'SOL-USDT-SWAP','EOS-USDT-SWAP','XRP-USDT-SWAP']
+params= {'hedged': False, 'tdMode': 'isolated', 'leverage': lvg} 
+telegram_on = 0
+######### end of strategy config #########   
+
 config = configparser.ConfigParser()
 config.read('config.ini')
 api_key = config['testnet']['api_key']
@@ -21,18 +31,10 @@ okx = ccxt.okx({
 })
 okx.set_sandbox_mode(True)
 
-lvg,shot,haircut,cancel_time,k = 10, 5,0.01,5,0
-threshold = shot * 2
 sendMsgText = ''
-
-params= {'hedged': False, 'tdMode': 'isolated', 'leverage': lvg} 
-
-# balance  = pd.DataFrame(okx.fetch_balance()['info']['data'][0]['details'])
-# availBal = float(balance[balance['ccy'] == 'USDT']['availBal'].iloc[0])
-target_pool = ['BTC-USDT-SWAP','DOGE-USDT-SWAP','ETH-USDT-SWAP',
-               'SOL-USDT-SWAP','EOS-USDT-SWAP','XRP-USDT-SWAP']
-
 contracts = {}
+k = 0
+
 for symbol in target_pool:
     now_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     okx.load_markets()
@@ -69,7 +71,8 @@ while True:
                     else:
                         sendMsgText = f"{k} reverse signal cancel order {symbol} signal：{signal} {now_str}"
                     url = f'https://api.telegram.org/bot{tg_token}/sendMessage?chat_id={tg_chat_id}&text={sendMsgText}'
-                    response = requests.post(url)      
+                    if telegram_on == 1:
+                        response = requests.post(url)      
                     print(sendMsgText)
                     tme.sleep(1)
                     continue
@@ -83,13 +86,15 @@ while True:
             if k % 2001 ==1:
                 ticker = okx.fetch_ticker(symbol)
                 last = ticker['close']
-                sendMsgText = crypto.tg_html(symbol=symbol,action='holding',side=holding.position['side'],
-                                                lvg=holding.position['leverage'],price=holding.position['entryPrice'],
-                                                pos=holding.pos,last=last,PnL=holding.unrealizedPnl,PnL_ratio=holding.upnl_ratio )
-                response = crypto.send_html(tg_token,tg_chat_id,sendMsgText)      
+                if telegram_on == 1:
+                    sendMsgText = crypto.tg_html(symbol=symbol,action='holding',side=holding.position['side'],
+                                                    lvg=holding.position['leverage'],price=holding.position['entryPrice'],
+                                                    pos=holding.pos,last=last,PnL=holding.unrealizedPnl,PnL_ratio=holding.upnl_ratio )
+                    response = crypto.send_html(tg_token,tg_chat_id,sendMsgText)      
                 if not response:  
                     tme.sleep(2)
-                    response = crypto.send_html(tg_token,tg_chat_id,sendMsgText) 
+                    if telegram_on == 1:
+                        response = crypto.send_html(tg_token,tg_chat_id,sendMsgText) 
 
             if not holding.open_order:
                 message = ''
@@ -114,9 +119,10 @@ while True:
                             act = "close loss"
                         else:
                             act = "close profit"
-                        sendMsgText = crypto.tg_html(symbol=symbol,action= act,side=side,lvg=lvg,price=price,pos=amount,
-                                                        last=last,PnL=holding.unrealizedPnl,PnL_ratio=holding.upnl_ratio )
-                        response = crypto.send_html(tg_token,tg_chat_id,sendMsgText) 
+                        if telegram_on == 1:
+                            sendMsgText = crypto.tg_html(symbol=symbol,action= act,side=side,lvg=lvg,price=price,pos=amount,
+                                                            last=last,PnL=holding.unrealizedPnl,PnL_ratio=holding.upnl_ratio )
+                            response = crypto.send_html(tg_token,tg_chat_id,sendMsgText) 
                     except Exception as e:
                         print(f"{k} {symbol} line132 error {e} {datetime.now()}")
                         continue         
@@ -147,9 +153,10 @@ while True:
                         print(f"{k} {symbol} signal:{signal} last:{last} ma1:{round(kbars['ma'].iat[-1],4)} ma7:{round(kbars['ma'].iat[-7],4)} {last>kbars['ma'].iat[-1]} {datetime.now()}")
 
                     if order_response:
-                        sendMsgText = crypto.tg_html(symbol=symbol,action='new',side=order_response['side'],lvg=lvg,
-                                                        price=order_price,last=last,pos=pos)
+                        if telegram_on == 1:
+                            sendMsgText = crypto.tg_html(symbol=symbol,action='new',side=order_response['side'],lvg=lvg,
+                                                            price=order_price,last=last,pos=pos)
 
-                        response = crypto.send_html(tg_token,tg_chat_id,sendMsgText) 
+                            response = crypto.send_html(tg_token,tg_chat_id,sendMsgText) 
                         print(sendMsgText)   
     k += 1     
