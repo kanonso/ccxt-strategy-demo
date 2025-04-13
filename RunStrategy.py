@@ -35,6 +35,8 @@ sendMsgText = ''
 contracts = {}
 k = 0
 
+print(f"{k} start running strategy {datetime.now()}")
+
 for symbol in target_pool:
     now_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     okx.load_markets()
