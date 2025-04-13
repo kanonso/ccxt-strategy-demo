@@ -35,6 +35,8 @@ sendMsgText = ''
 contracts = {}
 k = 0
 
+print(f"{k} start running strategy {datetime.now()}")
+
 for symbol in target_pool:
     now_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     okx.load_markets()
@@ -153,5 +155,5 @@ while True:
 
                             response = crypto.send_html(tg_token,tg_chat_id,sendMsgText) 
                         print(sendMsgText)   
-        print(f"{k} {symbol} signal：{signal} {datetime.now()}")
+        print(f"{k} {symbol} signal:{signal} {datetime.now()}")
     k += 1     
