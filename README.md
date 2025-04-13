@@ -18,7 +18,6 @@
 # 运行步骤
 运行本项目代码，请遵循以下步骤
 1.   开通加密货币交易所账号以及API(模拟交易/真实交易)
-![alt text](image.png)
 2.   config.ini填写 api_key 以及 Telegram BOT
 3.   调整 RunStrategy.py 以下的策略设定
 
