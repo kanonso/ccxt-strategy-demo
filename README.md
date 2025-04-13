@@ -85,7 +85,7 @@
 
 **target_pool = ['BTC-USDT-SWAP','DOGE-USDT-SWAP','ETH-USDT-SWAP', 'SOL-USDT-SWAP','EOS-USDT-SWAP','XRP-USDT-SWAP']**
 
-- 监控池：初始设定6支永续合约代码
+- 监控池：初始设定同时监控6支永续合约代码
 
 **telegram_on = 0**
 
