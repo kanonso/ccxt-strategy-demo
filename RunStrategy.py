@@ -55,8 +55,7 @@ while True:
         signal = kbars.signal.iloc[-1]
         contractSize = contracts[symbol]['contractSize']
         minSz = contracts[symbol]['minSz']
-        ticker = okx.fetch_ticker(symbol)
-        last = ticker['close']
+        last = kbars.Close.iloc[-1]
         pos = round(round((lvg * shot) /( last * contractSize * minSz )) * minSz,8)
         # order_price = round(last * (1 - haircut),6)
         if holding.open_order:
@@ -85,8 +84,6 @@ while True:
                 print(f"{k} {holding.symbol} {holding.side} {holding.pos} unrealized PnL:{holding.unrealizedPnl:.2f}u {holding.upnl_ratio:.2f}% signal:{signal} {now_str}")
 
             if k % 2001 ==1:
-                ticker = okx.fetch_ticker(symbol)
-                last = ticker['close']
                 if telegram_on == 1:
                     sendMsgText = crypto.tg_html(symbol=symbol,action='holding',side=holding.position['side'],
                                                     lvg=holding.position['leverage'],price=holding.position['entryPrice'],
@@ -139,10 +136,6 @@ while True:
                         balance = okx.fetch_balance()['free']['USDT']
                 print(f"signal:{symbol} signal:{signal} bal:{balance:.4f} {now_str}")                    
                 if balance >threshold:
-                    ticker = okx.fetch_ticker(symbol)
-                    last = ticker['close']
-                    pos = round(round((lvg * shot) /( last * contractSize * minSz )) * minSz,8)
-
                     order_response = None                              
                     if (signal >0):
                         order_price = round(last * (1 - haircut),6)
