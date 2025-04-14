@@ -77,3 +77,7 @@
 
     交易参数：单向模式、逐仓、杠杆倍数 
     以上参数需要在 okx 交易界面另外同步设定
+
+[![Watch the video](https://img.youtube.com/vi/f4HzLUZ4CZY/maxresdefault.jpg)](https://youtu.be/f4HzLUZ4CZY)
+### [Watch this video on YouTube](https://youtu.be/f4HzLUZ4CZY)
+
