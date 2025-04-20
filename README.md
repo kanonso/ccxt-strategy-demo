@@ -78,6 +78,6 @@
     交易参数：单向模式、逐仓、杠杆倍数 
     以上参数需要在 okx 交易界面另外同步设定
 
-[![Watch the video](https://img.youtube.com/vi/f4HzLUZ4CZY/maxresdefault.jpg)](https://youtu.be/f4HzLUZ4CZY)
-### [Watch this video on YouTube](https://youtu.be/f4HzLUZ4CZY)
+[![Watch the video][(https://img.youtube.com/vi/f4HzLUZ4CZY/maxresdefault.jpg)](https://www.bilibili.com/video/BV1D5Lwz1ErF/)](https://youtu.be/f4HzLUZ4CZY)
+### [Watch this video on bilibili]([https://youtu.be/f4HzLUZ4CZY](https://www.bilibili.com/video/BV1D5Lwz1ErF/?vd_source=a29c70776b469005541a2fb4ea95d22c))
 
