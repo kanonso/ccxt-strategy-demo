@@ -16,7 +16,7 @@
 ### 特点
 
 - 可模拟、实盘的python量化交易代码。示范如何编写一个**完整的python量化交易策略**
-- 示例使用 [OKX 交易所](https://www.okx.com/join/EZQUANT888) 模拟交易 API
+- 示例使用 [OKX 交易所](https://okx.com/join/3015331) 模拟交易 API
 - 策略为多支加密货币永续合约的 **布林通道策略**
 
 ---
